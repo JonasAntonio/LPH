@@ -1,0 +1,6 @@
+Os repositórios:
+   Trabalho-LPH2;
+   lph-2016-plat;
+   simple-colorpick;
+   simple-pathfinder.
+ Fazem parte da matéria de Laboratório de programação de Hipermídia.
