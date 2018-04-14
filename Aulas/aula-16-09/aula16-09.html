@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Exemplo Canvas 01</title>
+		<meta charset="utf-8" />
+		<style type="text/css">
+			html{
+				background-image: url("images/grass.png");
+				background-repeat: repeat-x;
+			}
+			#test{
+				width: 32px;
+				height: 32px;
+				background-image: url("images/dirt2.png");
+				background-size: 96px;
+				background-position: 32px 32px;
+			}
+			#test2{
+				width: 32px;
+				height: 64px;
+				background-image: url("images/male_walkcycle.png"), url("images/male_pants.png");
+				background-position: -16px 128px, -16px 128px;
+			}
+			#test2:hover{
+				background-position: -16px 64px, -16px 64px;
+			}
+			ul{
+				list-style-type: none;
+				padding-left: 0px; 
+			}
+			li{
+				list-style-image: url(images/soldier.png);
+				height: 32px;
+				background-repeat: no-repeat;
+				padding-left: 32px;
+				background-size: 62%;
+				background-position-x: -242px;
+				background-position-y: -4px; 
+
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Exemplo</h1>
+		<p>Esta é uma imagem:
+			<img src="images/rock.png">
+		</p>
+		<a href="images/dirt2.png"><img src="images/dirt2.png" width="32" height="64" alt="Conjunto de ladrilhos com aspecto de terra." title="Ladrilhos de terra"></a>
+		<div id="test"></div>
+		<div id="test2"></div>
+		<ul>
+			<li>Frente</li>
+			<li>Verso</li>
+			<li>Lado</li>
+		</ul>
+	</body>
+
+</html>

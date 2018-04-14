@@ -1,0 +1,76 @@
+body{
+	margin-left: auto;
+	margin-right: auto;
+	width: 940px;
+	text-align: center;
+	}
+div{
+	position: relative;
+	width: 200px;
+	height: 200px;
+	float: left;
+	}
+#Inicio{
+	
+	position: relative;
+	bottom: 200px;
+	left: 230px;
+	}
+#MargemE{
+	position: relative;
+	bottom: 180px;
+	left: 300px;
+	}
+#MargemD{
+	position: relative;
+	bottom: 220px;
+	left: 400px;
+	}
+#Termino{
+	position: relative;
+	bottom: 320px;
+	right: -10px;
+	}
+#Galinha{
+	position: absolute;
+	top: 20px;
+	left: 110px;
+	}
+#Raposa{
+	position: absolute;
+	top: 30px;
+	left: 30px;
+	}
+#Milho{
+	position: absolute;
+	top: 100px;
+	left: 80px;
+	}
+#Barco img{
+	height: 130px;
+	width: 232px;
+	}
+#Barco{
+	height: 35px;
+	width: 50px;
+	}
+#Galinha img,#Raposa img,#Milho img{
+	height: 80px;
+	width: 80px;
+	}
+#Galinha,#Raposa,#Milho{
+	height: 35px;
+	width: 50px;
+	}
+button{
+	position: relative;
+	right: 390px;
+	}
+#BotaoD img,#BotaoE img{
+	width: 50px;
+	height: 20px;
+	}
+.fim{
+	width: 490px;
+	height: 280px;
+}

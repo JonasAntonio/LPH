@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Exemplo Canvas 01</title>
+		<meta charset="utf-8"/>
+	</head>
+	<body>
+		<h1>Exemplo Canvas 01</h1>
+		<canvas height="300" width="400"></canvas>
+
+		<script>
+		// 15 linhas por 20 colunas
+		var mapa =[
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0],
+			[0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0],
+			[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+		];
+			var tela = document.querySelector("canvas");
+			var ctx = tela.getContext("2d");
+			var vezes = 0;
+			var pc = {
+				x : 1,
+				y : 2
+			};
+			var npcs = [];
+			var pb = {
+				x : 12,
+				y : 7
+			};
+
+			desenharMapa();
+			desenharPB();
+			desenharPC();
+			desenharNPCS();
+
+			function desenharNPCS() {
+				for (var i = 0; i < 5; i++) {
+					do {
+						npcs[i] = {
+							x: Math.floor(20*Math.random()),
+							y: Math.floor(15*Math.random())		 	
+						};
+						ctx.fillStyle = "black";
+						ctx.fillRect(20*npcs[i].x,20*npcs[i].y, 20, 20); 
+						ctx.lineWidth = 3;
+						ctx.strokeStyle = "white";
+						ctx.strokeRect(20*npcs[i].x,20*npcs[i].y, 20,20);
+					} while (mapa[npcs[i].y][npcs[i].x]==1);
+				} 
+			}
+
+			function desenharPC(){
+				ctx.fillStyle = "blue";
+				ctx.fillRect(20*pc.x,20*pc.y, 20, 20); 
+				ctx.lineWidth = 3;
+				ctx.strokeStyle = "red";
+				ctx.strokeRect(20*pc.x,20*pc.y, 20,20);
+				//            ( x, y,  l, a)
+			}
+			
+			function moverNPCS() {
+				for (var i = 0; i < 5; i++) {
+					
+					if((pc.x > npcs[i].x)&&(mapa[npcs[i].y][npcs[i].x+1] == 0)) npcs[i].x = npcs[i].x+1;
+					if((pc.x < npcs[i].x)&&(mapa[npcs[i].y][npcs[i].x-1] == 0)) npcs[i].x = npcs[i].x-1;
+					if((pc.y > npcs[i].y)&&(mapa[npcs[i].y+1][npcs[i].x] == 0)) npcs[i].y = npcs[i].y+1;
+					if((pc.y < npcs[i].y)&&(mapa[npcs[i].y-1][npcs[i].x] == 0)) npcs[i].y = npcs[i].y-1;
+					
+					if(pc.x == npcs[i].x && pc.y == npcs[i].y){
+						pc.x = 1;
+						pc.y = 2;
+					}
+				}
+
+				for (var i = 0; i < 5; i++) {
+					ctx.fillStyle = "black";
+					ctx.fillRect(20*npcs[i].x,20*npcs[i].y, 20, 20); 
+					ctx.lineWidth = 3;
+					ctx.strokeStyle = "white";
+					ctx.strokeRect(20*npcs[i].x,20*npcs[i].y, 20,20);
+				}
+			}
+
+			function desenharPB(){
+				ctx.fillStyle = "red";
+				ctx.fillRect(20*pb.x,20*pb.y, 20, 20); 
+				ctx.lineWidth = 3;
+				ctx.strokeStyle = "blue";
+				ctx.strokeRect(20*pb.x,20*pb.y, 20,20);
+				if(pc.x == pb.x && pc.y == pb.y){
+					do {
+						pb.x = Math.floor(20*Math.random());
+						pb.y = Math.floor(15*Math.random()); 
+					} while (mapa[pb.y][pb.x]==1);
+					
+				}
+
+			}
+
+			function desenharMapa(){
+				ctx.strokeStyle = "black";
+				ctx.lineWidth = 1;
+				for (var l=0; l<tela.height/20; l++) {
+					for(var c=0; c<tela.width/20; c++) {
+						if(mapa[l][c]==0){
+							ctx.fillStyle = "green";
+						}else{
+							ctx.fillStyle = "gray";
+						}
+
+						ctx.fillRect(20*c,20*l, 20,20);
+						ctx.strokeRect(20*c,20*l, 20,20);
+					}
+				}
+			}
+
+			function moveDireita() {
+				if (mapa[pc.y][pc.x+1] == 0) pc.x++;
+			}
+
+			function moveEsquerda() {
+				if (mapa[pc.y][pc.x-1] == 0) pc.x--;
+			}
+
+			function moveBaixo() {
+				if (mapa[pc.y+1][pc.x] == 0) pc.y++;
+			}
+			function moveCima() {
+				if (pc.y>0&&mapa[pc.y-1][pc.x] == 0) pc.y--;
+			}
+
+			function executaComando(evento){
+				console.log(evento.keyCode);
+				if(evento.keyCode == 39) {
+					evento.preventDefault();
+					moveDireita();
+				}
+				else if(evento.keyCode == 37) {
+					evento.preventDefault();
+					moveEsquerda();
+				}
+				else if(evento.keyCode == 40) {
+					evento.preventDefault();
+					moveBaixo();
+				}
+				else if(evento.keyCode == 38) {
+					evento.preventDefault();
+					moveCima();
+				}
+				desenharMapa();
+				desenharPB();
+				desenharPC();
+				moverNPCS();
+			}
+
+			document.addEventListener("keydown", executaComando);
+
+		</script>	
+
+	</body>
+</html>

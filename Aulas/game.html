@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8">
+		<title>Aula 05/08/2016</title>
+		<style>
+			body{
+				margin: auto;
+				width: 800px;
+				height: 600px;
+				text-align: center;
+			}
+			#externo {
+				background-color: rgb(200,255,200);
+				width: 600px;
+				height: 400px;
+				position: relative;
+			}
+			#interno{
+				background-color: red;
+				width: 20px;
+				height: 20px;
+				top: 0px;
+				left: 0px;
+				position: absolute;
+			}
+			.outro{
+				background-color: black;
+				width: 20px;
+				height: 20px;
+				top: 250px;
+				left: 250px;
+				position: absolute;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="externo">
+			<div id="interno"></div>
+			<div class="outro"></div>
+		</div>
+
+		<script type="text/javascript">
+			var interno = document.querySelector("#interno");
+			var outro = document.querySelector(".outro");
+			var x = 0;
+			var y = 0;
+			var ox = 250;
+			var oy = 250;
+			var v = 10;
+
+			function moveDireita() {
+				x = x + 20;
+				interno.style.left = x + "px";
+			}
+
+			function moveEsquerda() {
+				x = x - 20;
+				interno.style.left = x + "px";
+			}
+
+			function moveCima() {
+				y = y - 20;
+				interno.style.top = y + "px";
+			}
+
+			function moveBaixo() {
+				y = y + 20;
+				interno.style.top = y + "px";
+			}
+
+			function moveOutro() {
+				if(x > ox) ox = ox + v;
+				if(x < ox) ox = ox - v;
+				if(y > oy) oy = oy + v;
+				if(y < oy) oy = oy - v;
+
+				outro.style.left = ox + "px";
+				outro.style.top = oy + "px";
+
+				if(x==ox && y==oy) {
+					interno.style.left = "0px";
+					interno.style.top = "0px";
+					
+				}
+			}
+
+			function executaComando(evento){
+				console.log(evento.keyCode);
+				if(evento.keyCode == 39){
+					if(x > 560){
+						return;
+					}else{
+						evento.preventDefault();
+						moveDireita();
+					}
+				}else if(evento.keyCode == 37){
+					if(x == 0){
+						return;
+					}else{
+						evento.preventDefault();
+						moveEsquerda();
+					}
+
+				}else if(evento.keyCode == 38){
+					if(y == 0){
+						return;
+					}else{
+						evento.preventDefault();
+						moveCima();
+					}
+
+				}else if(evento.keyCode == 40){
+					if(y > 360){
+						return;
+					}else{
+						evento.preventDefault();
+						moveBaixo();
+					}
+				}
+				moveOutro();
+			}
+
+			document.addEventListener("keydown", executaComando);
+			setInterval(moveOutro, 1000);
+		</script>
+			
+	</body>
+</html>

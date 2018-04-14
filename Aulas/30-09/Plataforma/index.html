@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Plataforma</title>
+		<meta charset="utf-8" />
+	</head>
+	<body>
+		<h1>Plataforma</h1>
+		<canvas id="tela" width="600" height="300"></canvas>
+		<script>
+			var tela = document.getElementById("tela");
+			var ctx = tela.getContext('2d');
+			var imgPc = new Image();
+			var x = 0;
+			var fps = 30;
+			var dt = 1.0/fps;
+			var g = 300;
+			imgPc.src = "pc.svg";
+			var pc = {
+				x:0,
+				y:0,
+				vx:0,
+				vy:0,
+				ax:0,
+				ay:0,
+				desenha: function(ctx){
+					if(this.vx>=0){
+						ctx.drawImage(imgPc,0,0,32,32,this.x,this.y,41,72);
+					}else{
+						ctx.save();
+						ctx.tanslate(this.x,this.y);
+						ctx.scale(-1,1);
+						ctx.drawImage(imgPc,0,0,32,32,this.x,this.y,41,72);
+						ctx.restore();
+					}
+				},
+				move: function(dt){
+					this.x = this.x + this.vx * dt;
+					this.y = this.y + this.vy * dt;
+
+					this.vx = this.vx + this.ax*dt;
+					this.vy = this.vy + this.ay*dt+dt*g;
+
+					if(this.y > 100){
+						this.y = 100;
+						this.vy = 0
+					}
+				}
+			}
+
+			setInterval(desenha, 1000*dt);
+			
+
+			function desenha(){
+				pc.move(dt);
+
+				ctx.clearRect(0,0,tela.width,tela.height)
+				ctx.fillText(x++,50,20);
+				pc.desenha(ctx);
+			}
+
+			addEventListener("keydown", function(e){
+				switch(e.keyCode){
+					case 37:
+						pc.vx = -60;
+						e.preventDefault();
+						break;
+					case 38:
+						if(pc.y==100){
+							pc.vy = pc.vy-200;
+						}
+						e.preventDefault();
+						break;
+					case 39:
+						pc.vx = 60;
+						e.preventDefault();
+						break;
+				}
+			});
+			addEventListener("keyup", function(e){
+				switch(e.keyCode){
+					case 37:
+					case 39:
+						pc.vx = 0;
+						e.preventDefault();
+						break;
+					case 38:
+						pc.ay = 0;
+						e.preventDefault();
+						break;
+
+				}
+			});
+		</script>
+	</body>
+</html>
+
+
+
+

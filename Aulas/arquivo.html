@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Animação Básica</title>
+		<meta charset="utf-8" />
+		<style>
+		body{
+			margin: auto;
+			width: 800px;
+		}
+		#externo {
+			background-color: rgb(200,255,200);
+			width: 600px;
+			height: 400px;
+			position: relative;
+		}
+		#interno {
+			background-color: rgb(255,50,50);
+			width: 20px;
+			height: 20px;
+			top: 0px;
+			left: 0px;
+			position: absolute;
+		}
+		.outro {
+			background-color: rgb(0,0,0);
+			width: 20px;
+			height: 20px;
+			top: 300px;
+			left: 300px;
+			position: absolute;
+		}
+		#bonus{
+			background-color: rgb(0,0,255);
+			width: 20px;
+			height: 20px;
+			top: 120px;
+			left: 120px;
+			position: absolute; 
+		}	
+		</style>
+	</head>
+	<body>
+		<div id="externo">
+			<div id="interno"></div>
+			<div id="bonus"></div>
+		</div>
+		<script>
+			var interno = document.querySelector("#interno");
+			var bonus = document.querySelector("#bonus");
+			var pula = 3;
+			var k = 3;
+
+			var pc = {
+				x: 0,
+				y: 0
+			};
+			var b = {
+				x:120,
+				y:120
+			}
+
+			var npcs = [];
+			for (var i = 0; i <5; i++) {	
+				var eNPC = document.createElement("div");
+				eNPC.setAttribute('class', 'outro');
+				externo.appendChild(eNPC);
+				npcs[i] = {
+					x: 400-20*Math.floor(10*Math.random()),
+					y: 300-20*Math.floor(10*Math.random()),
+					e: eNPC
+				};
+			}
+			
+			
+
+			function moveDireita() {
+				pc.x = pc.x + 20;
+				interno.style.left = pc.x+"px";
+			}
+			function moveEsquerda() {
+				pc.x = pc.x - 20;
+				interno.style.left = pc.x+"px";
+			}
+			function moveBaixo() {
+				pc.y = pc.y + 20;
+				interno.style.top = pc.y+"px";
+			}
+			function moveCima() {
+				pc.y = pc.y - 20;
+				interno.style.top = pc.y+"px";
+			}
+
+			function moveOutro() {
+				if(++k % pula != 0){
+					return;
+				}
+				k = 0;
+				for(var i=0; i<5; i++){
+					if(pc.x > npcs[i].x ) npcs[i].x = npcs[i].x + 20;
+					if(pc.x < npcs[i].x ) npcs[i].x = npcs[i].x - 20;
+					if(pc.y > npcs[i].y ) npcs[i].y = npcs[i].y + 20;
+					if(pc.y < npcs[i].y ) npcs[i].y = npcs[i].y - 20;
+
+					npcs[i].e.style.left = npcs[i].x+"px";
+					npcs[i].e.style.top = npcs[i].y+"px";
+
+					if(pc.x==npcs[i].x && pc.y == npcs[i].y){
+						pc.x = 0;
+						pc.y = 0;
+						interno.style.left = pc.x+"px";
+						interno.style.top = pc.y+"px";
+					}
+				}
+			}
+			
+			function pontosBonus(){
+				if(pc.x == b.x && pc.y == b.y){
+					bonus.style.left = 580-20*Math.floor(10*Math.random())+"px";
+					bonus.style.top = 380-20*Math.floor(10*Math.random())+"px";
+					b.x = parseInt(bonus.style.left);
+					b.y = parseInt(bonus.style.top);
+				}
+
+			}
+			
+			function executaComando(evento){
+				console.log(evento.keyCode);
+				if(evento.keyCode == 39){
+					evento.preventDefault();
+					moveDireita();
+				} else if(evento.keyCode == 37){
+					evento.preventDefault();
+					moveEsquerda();
+				} else if(evento.keyCode == 38){
+					evento.preventDefault();
+					moveCima();
+				} else if(evento.keyCode == 40){
+					evento.preventDefault();
+					moveBaixo();
+				}
+				moveOutro();
+			}
+			moveOutro();
+			pontosBonus();
+			document.addEventListener("keydown", executaComando);
+			//setInterval(moveOutro, 1000);
+		</script>
+	</body>
+</html>
+
+
+
+

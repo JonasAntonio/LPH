@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />	
+		<title>Adicionar Tabela</title>
+		<style type="text/css">
+			#divBody{
+				height: 800px;
+				width: 600px;
+				margin: auto;
+				text-align: center;
+			}
+			input{
+				width: 50px;
+			}
+			#divCaixa{
+				width: 400px;
+				height: 400px;
+				border:1px solid black;
+				background-color: lightgray;
+			}
+			#divCriada{
+				background-color: red;
+				width: 0px;
+				height: 0px;
+				position: absolute;
+			}
+			label{
+				float:left;
+			}
+			
+		</style>
+	</head>
+	<div id="divBody">
+		<body>
+			<h1>Movimentação</h1>
+
+			<div id="divCaixa">
+				<div id="divCriada"></div>
+			</div>
+
+			<form name="formQuadrado">
+				<div id="divForm">
+					<div>
+						<label>X: <input type="number" name="formX" value="0"/></label>
+					</div>
+					<div>
+						<label>Y: <input type="number" name="formY" value="0"/></label>
+					</div>
+					<div>
+						<label>L: <input type="number" name="largura" value="0"/></label>
+					</div>
+					<div>
+						<label>A: <input type="number" name="altura" value="0"/></label>
+					</div>
+					<label><input type="submit"/></label>
+				</div>
+				</form>
+
+				<script type="text/javascript">
+					
+					document.formQuadrado.addEventListener("submit",enviar);
+					
+					function enviar (evento){
+						evento.preventDefault();
+						var valorX = document.formQuadrado.formX.value;
+						var valorY = document.formQuadrado.formY.value;
+						var valorL = document.formQuadrado.largura.value;
+						var valorA = document.formQuadrado.altura.value;
+						var divCriada = document.getElementById("divCriada");
+						
+						var criaDiv = document.getElementById("divCriada");
+						divCriada.style.top = valorY + "px";
+						divCriada.style.left = valorX + "px";
+						divCriada.style.width = valorL + "px";
+						divCriada.style.height = valorA + "px";
+
+					}
+				</script>
+				
+		</body>
+	</div>
+</html>

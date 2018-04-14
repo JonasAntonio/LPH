@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>Exercício Canvas</title>
+	</head>	
+	<body>
+		<h1>Exercício Canvas</h1>
+		
+		<canvas height = "300" width = "400"></canvas>
+
+		<script type="text/javascript">
+		var mapa = [
+				[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+				[1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+				[1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+				[1,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+				[1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+				[1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+				[1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+				[1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+				[1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+				[1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+				[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+				[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+				[1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1],
+				[1,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1],
+				[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+			];
+			var tela = document.querySelector("canvas");
+			var ctx = tela.getContext("2d");
+			var pc={
+				x: 1,
+				y: 2
+			};
+			var eny = {
+				x:18,
+				y:1,
+				s:[]
+			}
+			iniciaS();
+			desenharMapa();
+			desenharPc();
+			desenharEny();
+			montaS(pc.y,pc.x,1);
+			desenhaS();
+
+			function desenharPc(){
+				ctx.fillStyle = "blue";
+				ctx.fillRect(20*pc.x, 20*pc.y, 20, 20);
+				ctx.strokeStyle = "red";
+				ctx.lineWidth = 3;
+				ctx.strokeRect(20*pc.x, 20*pc.y, 20, 20); // X, Y, L, A
+			}
+			function desenharEny(){
+				ctx.fillStyle = "red";
+				ctx.fillRect(20*eny.x, 20*eny.y, 20, 20);
+				ctx.strokeStyle = "black";
+				ctx.lineWidth = 3;
+				ctx.strokeRect(20*eny.x, 20*eny.y, 20, 20);
+			}
+			function iniciaS() {
+				for(var l = 0; l < 15; l++){
+					eny.s[l] = [];
+					for(var c = 0; c < 20; c++){
+						if(mapa[l][c]==1){
+							eny.s[l][c] = -1;//se for parede
+						}else{
+							eny.s[l][c] = 99;
+						}
+					}
+				}
+			}
+
+			function montaS(l,c,a,v){
+				if(c<0 || l<0 || c>=20 || l>=15){
+					return;
+				}
+				if(eny.s[l][c]<=a){
+					return;
+				}
+				eny.s[l][c] = a;
+				montaS(l-1, c, a+1);
+				montaS(l+1, c, a+1);
+				montaS(l, c-1, a+1);
+				montaS(l, c+1, a+1);
+			}
+
+			function moveEny() {
+				var atual = eny.s[eny.y][eny.x];
+				var menor = atual;
+				var dir = 1;
+				if(eny.s[eny.y-1][eny.x]>0 && eny.s[eny.y-1][eny.x]<menor){
+					menor = eny.s[eny.y-1][eny.x];
+					dir = 1;
+				}
+				if(eny.s[eny.y][eny.x+1]>0 && eny.s[eny.y][eny.x+1]<menor){
+					menor = eny.s[eny.y][eny.x+1];
+					dir = 2;
+				}
+				if(eny.s[eny.y+1][eny.x]>0&&eny.s[eny.y+1][eny.x]<menor){
+					menor = eny.s[eny.y+1][eny.x];
+					dir = 3;
+				}
+				if(eny.s[eny.y][eny.x-1]>0 && eny.s[eny.y][eny.x-1]<menor){
+					menor = eny.s[eny.y][eny.x-1];
+					dir = 4;
+				}
+				switch(dir){
+					case 1:
+						eny.y--;
+						break;
+					case 2:
+						eny.x++;
+						break;
+					case 3:
+						eny.y++;
+						break;
+					case 4:
+						eny.x--;
+						break;
+
+				}
+			}
+
+			function desenhaS() {
+				for(var l = 0; l < 15; l++){
+					for(var c = 0; c < 20; c++){
+						ctx.fillStyle = "red";
+						ctx.fillText(eny.s[l][c], 20*c+4, 20*l+10);
+					}
+				}
+			}
+			
+			function desenharMapa(){
+				ctx.strokeStyle = "black";
+				ctx.lineWidth = 1;
+				for(var l=0; l<tela.height/20; l++){
+					for(var c=0; c<tela.width/20; c++){
+						if(mapa[l][c] == 0){
+							ctx.fillStyle = "green";
+						}else{
+							ctx.fillStyle = "grey";
+						}
+						ctx.fillRect(20*c, 20*l, 20, 20);
+						ctx.strokeRect(20*c, 20*l, 20, 20);
+					}
+				}
+			}
+
+			function moveDireita() {
+				if(mapa[pc.y][pc.x+1]==0) pc.x++;
+			}
+
+			function moveEsquerda() {
+				if(mapa[pc.y][pc.x-1]==0) pc.x--;
+			}
+
+			function moveBaixo() {
+				if(mapa[pc.y+1][pc.x]==0) pc.y++;
+			}
+			function moveCima() {
+				if(mapa[pc.y-1][pc.x]==0) pc.y--;
+			}
+
+			function executaComando(evento){
+				console.log(evento.keyCode);
+				if(evento.keyCode == 39) {
+					if(pc.x > 560){
+						return;
+					}
+					else{
+						evento.preventDefault();
+						moveDireita();
+					}
+				}
+				else if(evento.keyCode == 37) {
+					if(pc.x == 0){
+						return;
+					}
+					else{
+						evento.preventDefault();
+						moveEsquerda();
+					}
+				}
+				else if(evento.keyCode == 40) {
+					if(pc.y > 360){
+						return;
+					}
+					else{
+						evento.preventDefault();
+						moveBaixo();
+					}
+				}
+				else if(evento.keyCode == 38) {
+					if(pc.y == 0){
+						return;
+					}
+					else{
+						evento.preventDefault();
+						moveCima();
+					}
+				}
+				iniciaS();
+				montaS(pc.y,pc.x,1);
+				moveEny();
+				desenharMapa();
+				desenharPc();
+				desenharEny();
+				desenhaS();
+			}
+
+			document.addEventListener("keydown", executaComando);
+		</script>
+	</body>
+</html>

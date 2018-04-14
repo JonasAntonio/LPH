@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>Animação Básica</title>
+		<style>
+		body {
+		  margin: auto;
+		  width: 600px;
+		  height: 800px;
+		  text-align: center;
+		 
+		}
+		#externo {
+			background-color: rgb(200,255,200);
+			width: 600px;
+		    height: 400px;
+		    position: relative;
+		}
+		#interno {
+			background-color: rgb(255,50,50);
+			width: 20px;
+		    height: 20px;
+		    top: 0px;
+		    left: 0px;
+		    position: absolute;
+		}
+		.outro {
+			background-color: rgb(0,0,0);
+			width: 20px;
+			height: 20px;
+			top: 300px;
+			left: 300px;
+			position: absolute;
+		}
+		#bonus {
+			background-color: rgb(0,0,255);
+			width: 20px;
+			height: 20px;
+			top: 80px;
+			left: 80px;
+			position: absolute;
+		}
+
+		</style>
+	</head>	
+	<body>
+		<div id="externo">
+			<div id="interno"></div>
+			<div id="bonus"></div>
+		</div>
+		<script type="text/javascript">
+			var interno = document.querySelector("#interno");
+			var bonus = document.querySelector("#bonus")
+			var pula = 3;
+			var k = 3;
+			var pc = {
+				x: 0, 
+				y: 0
+			};
+			var npcs = [];
+			var pb = {
+				x: 80,
+				y: 80
+			}
+
+			for (var i = 0; i < 5; i++) {
+				var eNPC = document.createElement("div");
+				eNPC.setAttribute('class', 'outro');
+				externo.appendChild(eNPC);
+
+				npcs[i] = {
+				x: 400-20*Math.floor(10*Math.random()),
+				y: 300-20*Math.floor(10*Math.random()),
+				e: eNPC			 	
+				};
+			}
+			var v = 10;
+
+			function moveDireita() {
+				pc.x = pc.x + 20;
+				interno.style.left = pc.x+"px";
+			}
+
+			function moveEsquerda() {
+				pc.x = pc.x - 20;
+				interno.style.left = pc.x+"px";
+			}
+
+			function moveBaixo() {
+				pc.y = pc.y + 20;
+				interno.style.top = pc.y+"px";
+			}
+			function moveCima() {
+				pc.y = pc.y - 20;
+				interno.style.top = pc.y+"px";
+			}
+
+			function moveOutro() {
+				if(++k % pula != 0){
+					return;
+				}else{
+					k = 0;
+				}
+				for (var i = 0; i < 5; i++) {
+					if(pc.x > npcs[i].x) npcs[i].x = npcs[i].x + 20;
+					if(pc.x < npcs[i].x) npcs[i].x = npcs[i].x - 20;
+					if(pc.y > npcs[i].y) npcs[i].y = npcs[i].y + 20;
+					if(pc.y < npcs[i].y) npcs[i].y = npcs[i].y - 20;
+				
+				
+			
+					npcs[i].e.style.left = npcs[i].x+"px";
+					npcs[i].e.style.top = npcs[i].y+"px";
+
+					if(pc.x == npcs[i].x && pc.y == npcs[i].y){
+						pc.x = 0;
+						pc.y = 0;
+						interno.style.left = pc.x+"px";
+						interno.style.top = pc.y+"px";
+					}
+				}
+			}
+
+			function jogadorbonus() {
+				if(pc.x == pb.x && pc.y == pb.y){
+					bonus.style.left = 580-20*Math.floor(10*Math.random())+"px";
+					bonus.style.top = 380-20*Math.floor(10*Math.random())+"px";
+					pb.x = parseInt(bonus.style.left);
+					pb.y = parseInt(bonus.style.top);
+				}
+			}
+
+			function executaComando(evento){
+				console.log(evento.keyCode);
+				if(evento.keyCode == 39) {
+					if(pc.x > 560){
+						return;
+					}
+					else{
+						evento.preventDefault();
+						moveDireita();
+					}
+				}
+				else if(evento.keyCode == 37) {
+					if(pc.x == 0){
+						return;
+					}
+					else{
+						evento.preventDefault();
+						moveEsquerda();
+					}
+				}
+				else if(evento.keyCode == 40) {
+					if(pc.y > 360){
+						return;
+					}
+					else{
+						evento.preventDefault();
+						moveBaixo();
+					}
+				}
+				else if(evento.keyCode == 38) {
+					if(pc.y == 0){
+						return;
+					}
+					else{
+						evento.preventDefault();
+						moveCima();
+					}
+				}
+				moveOutro();
+				jogadorbonus();
+			}
+
+			document.addEventListener("keydown", executaComando);
+			// setInterval(moveOutro, 1000);
+
+		</script>
+	</body>
+</html>

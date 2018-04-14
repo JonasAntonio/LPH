@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Travessia</title>
+		<meta charset="utf-8"/>
+		<style>
+		
+			#Partida {
+				position: relative;
+				border-color: black;
+				border-width: 1px;
+				border-style: solid;
+				width: 300px;
+				height: 300px;
+				float: left;
+				background-repeat: no-repeat,no-repeat;
+				background-position: bottom,right,left;
+			}
+		
+			#DivEsquerda {
+				position: relative;
+				border-color: black;
+				border-width: 1px;
+				border-style: solid;
+				width: 300px;
+				height: 300px;
+				float: left;
+				background-repeat: no-repeat,no-repeat;
+				background-position: bottom,right,left;
+				background-color: #5588EF;
+			}
+			
+			#DivDireita {
+				position: relative;
+				border-width: 1px;
+				border-style: solid;
+				width: 300px;
+				height: 300px;
+				float: left;
+				background-color: #5588EF;
+			}
+			
+			#DivTermino {
+				position: relative;
+				border-color: black;
+				border-width: 1px;
+				border-style: solid;
+				width: 300px;
+				height: 300px;
+				background-repeat: no-repeat;
+				float:left;
+			}
+			
+			button{
+				position: relative;
+				right: 650px;
+				bottom: -320px;
+			}
+			
+			#Galinha{
+				position: absolute;
+				top: 20px;
+				left: 90px;
+			}
+			
+			#Milho {
+				position: absolute;
+				top: 30px;
+				left: 10px;
+			
+			}
+			
+			#Raposa{
+				position: absolute;
+				top: 35px;
+				left: 50px;
+			
+			}
+			
+			#Barco{
+				position:absolute;
+				top: 90px;
+				left: 3px;
+			
+			}
+			
+			#Barco img{
+				height: 80px;
+				width: 132px;
+			}
+			
+			#Galinha img,#Raposa img,#Milho img{
+				height: 50px;
+				width: 50px;
+			}
+			
+		</style>
+		
+	</head>
+	<body>
+			<div id="Partida">			
+				<div id="Galinha"> <img src="Imagens/galinha.jpg" onclick="MoverGalinha()"></div>
+				<div id="Milho"> <img src="Imagens/milho.jpg" onclick="MoverMilho()"></div>
+				<div id="Raposa"> <img src="Imagens/raposa.jpg" onclick="MoverRaposa()"></div>
+			</div>
+				
+			<div id="DivEsquerda" > 
+				<div id="Barco"> <img src="Imagens/barco.jpg"></div>
+			</div>
+			
+			<div id="DivDireita"> </div>	
+			<div id="DivTermino"> </div>
+
+			<button id="BotaoD" onclick="moveBarcoD()"><img src="Imagens/SetaD.jpg" ></button>
+			<button id="BotaoE" onclick="moveBarcoE()"><img src="Imagens/SetaE.jpg" ></button>
+			
+			
+	<script>
+	
+		var Barco = document.getElementById("Barco");
+		var Galinha = document.getElementById("Galinha");
+		var Raposa = document.getElementById("Raposa");
+		var Milho = document.getElementById("Milho");
+		var BotaoD = document.getElementById("BotaoD");
+		var BotaoE = document.getElementById("BotaoE");
+		
+	function moveBarcoD(){
+		DivDireita.appendChild(Barco);
+	}
+	
+	function moveBarcoE(){
+		DivEsquerda.appendChild(Barco);
+	}
+	
+	
+	function MoverGalinha(){
+		if(Barco.parentElement==DivEsquerda && Galinha.parentElement==Partida){
+			Barco.appendChild(Galinha);
+		}else if(Barco.parentElement==DivEsquerda && Galinha.parentElement==Barco){
+			Partida.appendChild(Galinha);
+		}else if(Barco.parentElement==DivDireita && Galinha.parentElement==Barco){
+			DivTermino.appendChild(Galinha);
+		}else if(Galinha.parentElement==DivTermino && Barco.parentElement==DivDireita){
+			Barco.appendChild(Galinha);
+		}
+	}
+	
+	function MoverRaposa(){
+		if(Barco.parentElement==DivEsquerda && Raposa.parentElement==Partida){
+			Barco.appendChild(Raposa);
+		}else if(Barco.parentElement==DivEsquerda && Raposa.parentElement==Barco){
+			Partida.appendChild(Raposa);
+		}else if(Barco.parentElement==DivDireita && Raposa.parentElement==Barco){
+			DivTermino.appendChild(Raposa);
+		}else if(Raposa.parentElement==DivTermino && Barco.parentElement==DivDireita){
+			Barco.appendChild(Raposa);
+		}
+	}
+	
+	function MoverMilho(){
+		if(Barco.parentElement==DivEsquerda && Milho.parentElement==Partida){
+			Barco.appendChild(Milho);
+		}else if(Barco.parentElement==DivEsquerda && Milho.parentElement==Barco){
+			Partida.appendChild(Milho);
+		}else if(Barco.parentElement==DivDireita && Milho.parentElement==Barco){
+			DivTermino.appendChild(Milho);
+		}else if(Milho.parentElement==DivTermino && Barco.parentElement==DivDireita){
+			Barco.appendChild(Milho);
+		}
+	}
+	
+	</script>
+	</body>
+</html>

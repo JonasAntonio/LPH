@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8">
+		<title>Aula 05/08/2016</title>
+		<style>
+			body{
+				margin: auto;
+				width: 800px;
+				height: 600px;
+				text-align: center;
+				
+
+			}
+
+			#resultado{
+				margin: auto;
+				width: 600px;
+				height: 600px;
+				border: 2px solid black;
+				margin-bottom: 30px;
+				background-color: #E8E6E8;
+				position: relative;
+				
+
+				
+				
+
+			}
+			input{
+				width: 60px;
+			}
+			.buraco{
+				background-color: red;
+				position: absolute;
+				top: 0;
+				left: 0;
+
+			}
+		</style>
+	</head>
+	<body>
+		
+		<div id="resultado">
+			
+		</div>
+		<form name="formulario">
+			<label>X:<input type="number" name="x" value="0"></label>
+			<label>Y:<input type="number" name="y" value="0"></label>
+			<label>L:<input type="number" name="l" value="0"></label>
+			<label>A:<input type="number" name="a" value="0"></label>
+			<input type="submit" value="OK">
+		</form>
+
+		<script>
+			var resultado = document.getElementById('resultado');
+
+			document.formulario.addEventListener("submit", enviar);
+			function enviar(event){
+				event.preventDefault();
+
+				var x = document.formulario.x.value;
+				var y = document.formulario.y.value;
+				var l = document.formulario.l.value;
+				var a = document.formulario.a.value;
+
+				if(x<0 || y<0 ){ 
+					
+					return;
+
+				}
+
+				var novaDiv = document.createElement('div');
+
+				novaDiv.setAttribute("class", "buraco");			
+				novaDiv.style.height = a+"px";
+				novaDiv.style.width = l+"px";
+				novaDiv.style.top = y+"px";
+				novaDiv.style.left = x+"px";
+				resultado.appendChild(novaDiv);
+
+
+			}
+
+
+		</script>
+			
+	</body>
+</html>

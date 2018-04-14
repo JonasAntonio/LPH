@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>Exemplo Canvas 01</title>
+	</head>
+		
+	<body>
+		<h1>Exemplo de Canvas 01</h1>
+
+		<canvas height = "300" width = "400" ></canvas>
+
+		<script type="text/javascript">
+			//15 linhas / 20 colunas
+			var mapa = [
+				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0],
+				[0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0],
+				[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+			];
+
+			var tela = document.querySelector("canvas");
+			var ctx = tela.getContext("2d");
+			var x = 1;
+			var y = 2;
+			desenharMapa();
+			desenharPc();
+			
+			function desenharPc(){
+				ctx.fillStyle = "blue";
+				ctx.fillRect(20*x, 20*y, 20, 20);
+				ctx.strokeStyle = "red";
+				ctx.lineWidth = 3;
+				ctx.strokeRect(20*x, 20*y, 20, 20); // X, Y, L, A
+			}
+			
+			function desenharMapa(){
+				ctx.strokeStyle = "black";
+				ctx.lineWidth = 1;
+				for(var l=0; l<tela.height/20; l++){
+					for(var c=0; c<tela.width/20; c++){
+						if(mapa[l][c] == 0){
+							ctx.fillStyle = "green";
+						}else{
+							ctx.fillStyle = "grey";
+						}
+						ctx.fillRect(20*c, 20*l, 20, 20);
+						ctx.strokeRect(20*c, 20*l, 20, 20);
+					}
+				}
+			}
+		</script>
+	</body>
+</html>
